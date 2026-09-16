@@ -70,9 +70,24 @@ export default function AdminOrderDetailManager({ order, customer, service, pkg,
 
             if (delivError) throw delivError;
 
+            // Trigger Email Notification to Client
+            fetch('/api/notifications/delivery', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    customerEmail: customer?.email,
+                    customerName: customer?.full_name,
+                    projectTitle: order.project_title,
+                    orderNumber: order.order_number,
+                    deliverableName: deliverableName,
+                    deliverableUrl: deliverableUrl,
+                    orderId: order.id,
+                }),
+            }).catch((e) => console.error('Email trigger warning:', e));
+
             setDeliverableName('');
             setDeliverableUrl('');
-            setMessage('Project deliverable file attached successfully.');
+            setMessage('Project deliverable attached & email delivery notification dispatched.');
             router.refresh();
         } catch (err) {
             setError(err.message || 'Failed to attach deliverable.');

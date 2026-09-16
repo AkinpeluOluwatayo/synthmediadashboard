@@ -6,6 +6,7 @@ import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { Card } from '@/components/ui/Card';
 import { StatusBadge } from '@/components/ui/StatusBadge';
 import { OrderStatusTimeline } from '@/components/orders/OrderStatusTimeline';
+import { OrderFeedbackForm } from '@/components/orders/OrderFeedbackForm';
 import { formatCurrency, formatDate } from '@/lib/utils';
 import { ArrowLeft, FileText, Download, Clock, CreditCard, Sparkles, FolderCheck } from 'lucide-react';
 
@@ -56,6 +57,13 @@ export default async function CustomerOrderDetailPage({ params, searchParams }) 
         .select('*')
         .eq('order_id', order.id)
         .eq('released', true);
+
+    // Fetch Existing Order Feedback
+    const { data: initialFeedback } = await supabase
+        .from('order_feedback')
+        .select('*')
+        .eq('order_id', order.id)
+        .maybeSingle();
 
     return (
         <DashboardLayout userProfile={profile}>
@@ -179,6 +187,13 @@ export default async function CustomerOrderDetailPage({ params, searchParams }) 
                                 </div>
                             )}
                         </Card>
+
+                        {/* Client Feedback Form */}
+                        <OrderFeedbackForm
+                            orderId={order.id}
+                            customerId={user.id}
+                            initialFeedback={initialFeedback}
+                        />
                     </div>
 
                     {/* Order Sidebar Details */}
