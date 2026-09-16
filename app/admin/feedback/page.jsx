@@ -18,10 +18,27 @@ export default async function AdminFeedbackPage() {
         .single();
 
     // Fetch all feedback submissions
-    const { data: feedbackList } = await supabase
-        .from('order_feedback')
-        .select('*, orders(order_number, project_title), profiles(full_name, email, business_name)')
-        .order('created_at', { ascending: false });
+    let feedbackList = [];
+    let tableMissing = false;
+
+    try {
+        const { data, error } = await supabase
+            .from('order_feedback')
+            .select('*, orders(order_number, project_title), profiles(full_name, email, business_name)')
+            .order('created_at', { ascending: false });
+
+        if (error) {
+            console.warn('order_feedback error:', error);
+            if (error.code === '42P01' || error.message?.includes('schema cache')) {
+                tableMissing = true;
+            }
+        } else {
+            feedbackList = data || [];
+        }
+    } catch (err) {
+        console.warn('order_feedback table query caught:', err);
+        tableMissing = true;
+    }
 
     const totalFeedback = feedbackList?.length || 0;
     const avgRating = totalFeedback > 0

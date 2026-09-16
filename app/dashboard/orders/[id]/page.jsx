@@ -58,12 +58,18 @@ export default async function CustomerOrderDetailPage({ params, searchParams }) 
         .eq('order_id', order.id)
         .eq('released', true);
 
-    // Fetch Existing Order Feedback
-    const { data: initialFeedback } = await supabase
-        .from('order_feedback')
-        .select('*')
-        .eq('order_id', order.id)
-        .maybeSingle();
+    // Fetch Existing Order Feedback (safely handle missing table schema cache)
+    let initialFeedback = null;
+    try {
+        const { data: feedbackData } = await supabase
+            .from('order_feedback')
+            .select('*')
+            .eq('order_id', order.id)
+            .maybeSingle();
+        initialFeedback = feedbackData;
+    } catch (e) {
+        console.warn('order_feedback table not ready yet in schema cache:', e);
+    }
 
     return (
         <DashboardLayout userProfile={profile}>
