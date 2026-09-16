@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --brand-magenta: #ec4899;
+    --brand-purple: #9333ea;
+    --brand-violet: #6b21a8;
+  }
+}
+
+/* Custom Magenta to Purple Gradient Utilities */
+.bg-synth-gradient {
+  background: linear-gradient(135deg, #ec4899 0%, #c026d3 50%, #9333ea 100%);
+}
+
+.text-synth-gradient {
+  background: linear-gradient(135deg, #ec4899 0%, #c026d3 50%, #9333ea 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.border-synth-gradient {
+  border-image: linear-gradient(135deg, #ec4899, #9333ea) 1;
+}
+
+/* Smooth UI transitions */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
