@@ -143,15 +143,11 @@ export default function AdminOrderDetailManager({ order, customer, service, pkg,
                                 <select
                                     value={status}
                                     onChange={(e) => setStatus(e.target.value)}
-                                    className="flex-1 w-full bg-gray-900 border border-gray-800 rounded-lg text-sm text-white px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                                    className="flex-1 w-full bg-gray-900 border border-gray-800 rounded-lg text-sm text-white px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-pink-500 font-semibold"
                                 >
-                                    <option value="PENDING_PAYMENT">PENDING_PAYMENT</option>
-                                    <option value="PAID">PAID</option>
-                                    <option value="AWAITING_INFORMATION">AWAITING_INFORMATION</option>
-                                    <option value="IN_PRODUCTION">IN_PRODUCTION</option>
-                                    <option value="IN_REVIEW">IN_REVIEW</option>
-                                    <option value="COMPLETED">COMPLETED</option>
-                                    <option value="CANCELLED">CANCELLED</option>
+                                    <option value="PAID">Payment Confirmed</option>
+                                    <option value="IN_PRODUCTION">In Production</option>
+                                    <option value="COMPLETED">Completed</option>
                                 </select>
                                 <Button onClick={handleStatusUpdate} isLoading={loading} className="w-full sm:w-auto px-6 py-2.5">
                                     Update Status

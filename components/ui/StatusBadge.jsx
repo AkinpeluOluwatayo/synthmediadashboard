@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 export function StatusBadge({ status }) {
     const statusConfig = {
         PENDING_PAYMENT: { label: 'Pending Payment', className: 'bg-amber-50 text-amber-700 border-amber-200' },
-        PAID: { label: 'Paid', className: 'bg-purple-50 text-purple-700 border-purple-200 font-semibold' },
+        PAID: { label: 'Payment Confirmed', className: 'bg-purple-50 text-purple-700 border-purple-200 font-semibold' },
         AWAITING_INFORMATION: { label: 'Awaiting Info', className: 'bg-blue-50 text-blue-700 border-blue-200' },
         IN_PRODUCTION: { label: 'In Production', className: 'bg-pink-50 text-pink-700 border-pink-200 font-semibold' },
         IN_REVIEW: { label: 'In Review', className: 'bg-indigo-50 text-indigo-700 border-indigo-200' },

@@ -96,9 +96,13 @@ export default function OrderCreationPage({ service, selectedPackage, profile })
                 provider: 'paystack',
             });
 
-            // Redirect to Paystack payment link if available, else go to order detail
+            // Redirect to Paystack payment link with callback URL pointing directly to this order page
             if (selectedPackage.paystack_link) {
-                window.location.href = selectedPackage.paystack_link;
+                const orderPageCallback = `${window.location.origin}/dashboard/orders/${newOrder.id}?payment=success`;
+                const paystackCheckoutUrl = selectedPackage.paystack_link.includes('?')
+                    ? `${selectedPackage.paystack_link}&callback_url=${encodeURIComponent(orderPageCallback)}`
+                    : `${selectedPackage.paystack_link}?callback_url=${encodeURIComponent(orderPageCallback)}`;
+                window.location.href = paystackCheckoutUrl;
             } else {
                 router.push(`/dashboard/orders/${newOrder.id}`);
                 router.refresh();

@@ -15,6 +15,7 @@ import {
     ChevronRight
 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
+import { Logo } from '@/components/ui/Logo';
 
 export function DashboardLayout({ children, userProfile }) {
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -48,15 +49,7 @@ export function DashboardLayout({ children, userProfile }) {
                 <div className="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto">
                     {/* Brand */}
                     <div className="flex items-center px-6 mb-8">
-                        <Link href="/dashboard" className="flex items-center gap-2">
-                            <div className="w-9 h-9 rounded-xl bg-synth-gradient flex items-center justify-center text-white font-black text-lg shadow-md">
-                                S
-                            </div>
-                            <div className="flex flex-col">
-                                <span className="font-bold text-gray-900 leading-tight tracking-tight">SYNTH MEDIA</span>
-                                <span className="text-[10px] font-semibold text-purple-600 tracking-wider">CLIENT PORTAL</span>
-                            </div>
-                        </Link>
+                        <Logo href="/dashboard" variant="dark" size="md" />
                     </div>
 
                     {/* Navigation */}
@@ -71,8 +64,8 @@ export function DashboardLayout({ children, userProfile }) {
                                         key={item.name}
                                         href={item.href}
                                         className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${isActive
-                                                ? 'bg-synth-gradient text-white shadow-md font-semibold'
-                                                : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                                            ? 'bg-synth-gradient text-white shadow-md font-semibold'
+                                            : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                                             }`}
                                     >
                                         <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-gray-500'}`} />
@@ -118,29 +111,50 @@ export function DashboardLayout({ children, userProfile }) {
                                 <X className="h-6 w-6" />
                             </button>
                         </div>
-                        <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
-                            <div className="flex items-center px-6 mb-6">
-                                <div className="w-8 h-8 rounded-lg bg-synth-gradient flex items-center justify-center text-white font-black">S</div>
-                                <span className="ml-2 font-bold text-gray-900">SYNTH MEDIA</span>
+                        <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto flex flex-col justify-between">
+                            <div>
+                                <div className="flex items-center px-6 mb-6">
+                                    <Logo href="/dashboard" variant="dark" size="sm" />
+                                </div>
+                                <nav className="px-4 space-y-1">
+                                    {navigation.map((item) => {
+                                        const isActive = pathname === item.href;
+                                        const Icon = item.icon;
+                                        return (
+                                            <Link
+                                                key={item.name}
+                                                href={item.href}
+                                                onClick={() => setMobileOpen(false)}
+                                                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium ${isActive ? 'bg-synth-gradient text-white font-semibold' : 'text-gray-600 hover:bg-gray-100'
+                                                    }`}
+                                            >
+                                                <Icon className="w-5 h-5" />
+                                                {item.name}
+                                            </Link>
+                                        );
+                                    })}
+                                </nav>
                             </div>
-                            <nav className="px-4 space-y-1">
-                                {navigation.map((item) => {
-                                    const isActive = pathname === item.href;
-                                    const Icon = item.icon;
-                                    return (
-                                        <Link
-                                            key={item.name}
-                                            href={item.href}
-                                            onClick={() => setMobileOpen(false)}
-                                            className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium ${isActive ? 'bg-synth-gradient text-white font-semibold' : 'text-gray-600 hover:bg-gray-100'
-                                                }`}
-                                        >
-                                            <Icon className="w-5 h-5" />
-                                            {item.name}
-                                        </Link>
-                                    );
-                                })}
-                            </nav>
+
+                            {/* Mobile Drawer Footer User Profile & Sign Out */}
+                            <div className="p-4 border-t border-gray-100 mt-auto">
+                                <div className="flex items-center gap-3 p-2.5 rounded-lg bg-gray-50 border border-gray-100 mb-2">
+                                    <div className="w-9 h-9 rounded-full bg-synth-gradient text-white font-bold flex items-center justify-center text-xs shrink-0">
+                                        {getInitials(userProfile?.full_name)}
+                                    </div>
+                                    <div className="flex flex-col min-w-0 flex-1">
+                                        <span className="text-xs font-bold text-gray-900 truncate">{userProfile?.full_name || 'Customer'}</span>
+                                        <span className="text-[11px] text-gray-500 truncate">{userProfile?.email || 'user@synth.com'}</span>
+                                    </div>
+                                </div>
+                                <button
+                                    onClick={() => { setMobileOpen(false); handleLogout(); }}
+                                    className="w-full flex items-center justify-center gap-2 px-3 py-2.5 text-xs font-bold text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors border border-red-100"
+                                >
+                                    <LogOut className="w-4 h-4" />
+                                    Sign Out
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -164,7 +178,7 @@ export function DashboardLayout({ children, userProfile }) {
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3">
                         <Link href="/dashboard/services" className="hidden sm:inline-flex">
                             <button className="px-3.5 py-1.5 bg-synth-gradient text-white text-xs font-semibold rounded-lg shadow-sm hover:opacity-95">
                                 + New Project
@@ -177,6 +191,15 @@ export function DashboardLayout({ children, userProfile }) {
                             </div>
                             <span className="text-xs font-bold text-gray-800 hidden md:inline">{userProfile?.full_name}</span>
                         </div>
+                        {/* Mobile view quick Sign Out button right in top header */}
+                        <button
+                            onClick={handleLogout}
+                            className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-bold text-red-600 bg-red-50 hover:bg-red-100 border border-red-200 rounded-lg transition-colors"
+                            title="Sign Out"
+                        >
+                            <LogOut className="w-3.5 h-3.5" />
+                            <span className="hidden sm:inline">Sign Out</span>
+                        </button>
                     </div>
                 </header>
 

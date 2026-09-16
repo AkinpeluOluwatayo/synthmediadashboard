@@ -9,8 +9,11 @@ import { OrderStatusTimeline } from '@/components/orders/OrderStatusTimeline';
 import { formatCurrency, formatDate } from '@/lib/utils';
 import { ArrowLeft, FileText, Download, Clock, CreditCard, Sparkles, FolderCheck } from 'lucide-react';
 
-export default async function CustomerOrderDetailPage({ params }) {
+export default async function CustomerOrderDetailPage({ params, searchParams }) {
     const { id } = await params;
+    const resolvedSearchParams = await searchParams;
+    const isPaymentSuccess = resolvedSearchParams?.payment === 'success' || resolvedSearchParams?.trxref || resolvedSearchParams?.reference;
+
     const supabase = await createClient();
 
     const { data: { user } } = await supabase.auth.getUser();
@@ -21,7 +24,7 @@ export default async function CustomerOrderDetailPage({ params }) {
         .eq('id', user?.id || '')
         .single();
 
-    const { data: order } = await supabase
+    let { data: order } = await supabase
         .from('orders')
         .select('*, services(name, category, description), packages(name, features, revisions, delivery_days)')
         .eq('id', id)
@@ -30,6 +33,15 @@ export default async function CustomerOrderDetailPage({ params }) {
 
     if (!order) {
         notFound();
+    }
+
+    // Auto-confirm payment if user redirected back from Paystack with success signal
+    if (isPaymentSuccess && order.status === 'PENDING_PAYMENT') {
+        await supabase
+            .from('orders')
+            .update({ status: 'PAID', updated_at: new Date().toISOString() })
+            .eq('id', order.id);
+        order.status = 'PAID';
     }
 
     // Fetch Submitted Order Files
@@ -67,6 +79,18 @@ export default async function CustomerOrderDetailPage({ params }) {
                         </div>
                     </div>
                 </div>
+
+                {isPaymentSuccess && (
+                    <div className="p-4 rounded-xl bg-purple-50 border border-purple-200 text-xs text-purple-900 font-semibold flex items-center justify-between shadow-sm">
+                        <div className="flex items-center gap-2">
+                            <span className="text-lg">🎉</span>
+                            <div>
+                                <span className="font-extrabold text-sm block">Payment Confirmed!</span>
+                                <span className="text-purple-700 text-xs">Your payment was successful and your project order status is now active.</span>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 {/* Visual Progress Timeline */}
                 <Card className="p-6">

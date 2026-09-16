@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
+import { Logo } from '@/components/ui/Logo';
 import { Sparkles, ArrowRight } from 'lucide-react';
 
 export default function LoginPage() {
@@ -56,14 +57,8 @@ export default function LoginPage() {
                 <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-pink-600/20 blur-3xl pointer-events-none" />
                 <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full bg-purple-600/20 blur-3xl pointer-events-none" />
 
-                <div className="relative z-10 flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-synth-gradient flex items-center justify-center font-black text-xl shadow-lg">
-                        S
-                    </div>
-                    <div>
-                        <span className="font-extrabold text-xl tracking-tight block">SYNTH MEDIA</span>
-                        <span className="text-[10px] font-bold text-pink-500 tracking-widest uppercase">AGENCY PORTAL</span>
-                    </div>
+                <div className="relative z-10">
+                    <Logo variant="light" size="lg" />
                 </div>
 
                 <div className="relative z-10 space-y-6 max-w-md">
@@ -87,11 +82,8 @@ export default function LoginPage() {
             <div className="flex-1 flex items-center justify-center p-6 sm:p-12">
                 <div className="w-full max-w-md space-y-8">
                     <div>
-                        <div className="lg:hidden flex items-center gap-2 mb-6">
-                            <div className="w-8 h-8 rounded-lg bg-synth-gradient flex items-center justify-center text-white font-black text-base">
-                                S
-                            </div>
-                            <span className="font-bold text-gray-900 tracking-tight">SYNTH MEDIA</span>
+                        <div className="lg:hidden flex items-center mb-6">
+                            <Logo variant="dark" size="md" />
                         </div>
                         <h2 className="text-2xl font-extrabold text-gray-900 tracking-tight">Welcome Back</h2>
                         <p className="mt-1 text-sm text-gray-500">Sign in to manage your services, projects and deliverables.</p>

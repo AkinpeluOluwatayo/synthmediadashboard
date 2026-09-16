@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirm Your Synth Media Account</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #0b0f17; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #ffffff;">
+  <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #0b0f17; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" max-width="600" border="0" cellspacing="0" cellpadding="0" style="max-width: 600px; background-color: #111827; border: 1px solid #1f2937; border-radius: 16px; overflow: hidden; padding: 40px 32px; text-align: left;">
+          <!-- Header Branding -->
+          <tr>
+            <td style="padding-bottom: 32px; border-bottom: 1px solid #1f2937;">
+              <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td width="48" style="vertical-align: middle;">
+                    <div style="width: 44px; height: 44px; background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%); border-radius: 12px; text-align: center; line-height: 44px; font-weight: 900; font-size: 22px; color: #ffffff;">S</div>
+                  </td>
+                  <td style="padding-left: 14px; vertical-align: middle;">
+                    <div style="font-size: 20px; font-weight: 800; letter-spacing: -0.5px; color: #ffffff;">SYNTH MEDIA</div>
+                    <div style="font-size: 10px; font-weight: 700; color: #ec4899; letter-spacing: 2px; text-transform: uppercase;">CREATIVE × DIGITAL × TECHNOLOGY</div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Email Content -->
+          <tr>
+            <td style="padding-top: 32px; padding-bottom: 24px;">
+              <h1 style="font-size: 24px; font-weight: 800; margin: 0 0 16px 0; color: #ffffff; letter-spacing: -0.5px;">Welcome to Synth Media Agency</h1>
+              <p style="font-size: 14px; line-height: 24px; color: #9ca3af; margin: 0 0 24px 0;">
+                Thank you for creating your account with Synth Media Agency. Please confirm your email address below to activate your client portal access and start managing your project deliverables.
+              </p>
+              
+              <!-- CTA Button -->
+              <table role="presentation" border="0" cellspacing="0" cellpadding="0" style="margin-top: 8px; margin-bottom: 24px;">
+                <tr>
+                  <td align="center" style="background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%); border-radius: 10px; padding: 14px 28px;">
+                    <a href="{{ .ConfirmationURL }}" target="_blank" style="color: #ffffff; text-decoration: none; font-weight: 700; font-size: 14px; display: inline-block; letter-spacing: 0.5px;">Confirm Account Email &rarr;</a>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="font-size: 12px; line-height: 20px; color: #6b7280; margin: 0;">
+                If the button above does not work, copy and paste this link into your browser:<br>
+                <a href="{{ .ConfirmationURL }}" style="color: #ec4899; word-break: break-all;">{{ .ConfirmationURL }}</a>
+              </p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding-top: 24px; border-top: 1px solid #1f2937; font-size: 11px; color: #6b7280; text-align: center;">
+              &copy; 2026 Synth Media Agency. All rights reserved.<br>
+              If you did not request this email, you can safely ignore it.
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
