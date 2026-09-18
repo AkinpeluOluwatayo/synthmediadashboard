@@ -90,7 +90,7 @@ export default async function ServicesMarketplacePage() {
 
                                             <div className="pt-4 mt-4 border-t border-gray-100 flex items-center justify-between">
                                                 <div>
-                                                    <span className="text-[10px] font-semibold text-gray-400 block uppercase">Starting from</span>
+                                                    <span className="text-[10px] font-semibold text-gray-400 block uppercase">Amount </span>
                                                     <span className="text-sm font-extrabold text-gray-900">
                                                         {minPrice !== null ? formatCurrency(minPrice) : 'Contact Us'}
                                                     </span>

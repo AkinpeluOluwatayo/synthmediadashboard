@@ -23,11 +23,14 @@ export default function SignupPage() {
     const router = useRouter();
     const supabase = createClient();
 
+    const [showPolicyModal, setShowPolicyModal] = useState(false);
+    const [policyAgreed, setPolicyAgreed] = useState(false);
+
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSignup = async (e) => {
+    const handleFormSubmit = (e) => {
         e.preventDefault();
         setError('');
 
@@ -41,6 +44,16 @@ export default function SignupPage() {
             return;
         }
 
+        setShowPolicyModal(true);
+    };
+
+    const executeSignup = async () => {
+        if (!policyAgreed) {
+            setError('You must accept the terms and policies to proceed.');
+            return;
+        }
+
+        setShowPolicyModal(false);
         setLoading(true);
 
         try {
@@ -53,6 +66,8 @@ export default function SignupPage() {
                         full_name: formData.fullName,
                         phone: formData.phone,
                         business_name: formData.businessName,
+                        policy_accepted: true,
+                        policy_accepted_at: new Date().toISOString(),
                     },
                 },
             });
@@ -113,7 +128,7 @@ export default function SignupPage() {
                         </div>
                     )}
 
-                    <form onSubmit={handleSignup} className="space-y-4">
+                    <form onSubmit={handleFormSubmit} className="space-y-4">
                         <Input
                             label="Full Name"
                             name="fullName"
@@ -184,6 +199,80 @@ export default function SignupPage() {
                     </p>
                 </div>
             </div>
+
+            {/* Policy Agreement Modal */}
+            {showPolicyModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+                    <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-100 space-y-5">
+                        <div className="flex items-center gap-3">
+                            <div className="p-2.5 bg-purple-50 text-purple-600 rounded-xl">
+                                <Sparkles className="w-6 h-6" />
+                            </div>
+                            <div>
+                                <h3 className="text-lg font-bold text-gray-900">Terms & Policy Agreement</h3>
+                                <p className="text-xs text-gray-500">Please review and accept our policies to continue.</p>
+                            </div>
+                        </div>
+
+                        <div className="text-sm text-gray-600 space-y-3 bg-gray-50 p-4 rounded-xl border border-gray-100">
+                            <p>
+                                Before creating your account, please read and agree to the terms, conditions, and policies governing the use of Synth Media Agency services.
+                            </p>
+                            <p>
+                                You can review our full policy document at any time here:{' '}
+                                <a
+                                    href="https://synthmediaagency.vercel.app/policies.html"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-purple-600 font-semibold underline hover:text-purple-700"
+                                >
+                                    https://synthmediaagency.vercel.app/policies.html
+                                </a>
+                            </p>
+                        </div>
+
+                        <label className="flex items-start gap-3 cursor-pointer pt-1">
+                            <input
+                                type="checkbox"
+                                checked={policyAgreed}
+                                onChange={(e) => setPolicyAgreed(e.target.checked)}
+                                className="mt-1 w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+                            />
+                            <span className="text-xs text-gray-700 font-medium leading-tight">
+                                I have read, understood, and agree to abide by the{' '}
+                                <a
+                                    href="https://synthmediaagency.vercel.app/policies.html"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-purple-600 underline"
+                                >
+                                    Synth Media Agency Policies
+                                </a>.
+                            </span>
+                        </label>
+
+                        <div className="flex items-center gap-3 pt-2">
+                            <Button
+                                variant="outline"
+                                className="flex-1 py-2.5 text-xs font-semibold"
+                                onClick={() => {
+                                    setShowPolicyModal(false);
+                                    setPolicyAgreed(false);
+                                }}
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                className="flex-1 py-2.5 text-xs font-semibold"
+                                disabled={!policyAgreed}
+                                onClick={executeSignup}
+                            >
+                                Agree & Continue
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
