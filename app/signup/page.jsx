@@ -25,6 +25,7 @@ export default function SignupPage() {
 
     const [showPolicyModal, setShowPolicyModal] = useState(false);
     const [policyAgreed, setPolicyAgreed] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -74,11 +75,13 @@ export default function SignupPage() {
 
             if (authError) throw authError;
 
-            router.push('/dashboard');
-            router.refresh();
+            setToastMessage('Account created successfully! Redirecting to dashboard...');
+            setTimeout(() => {
+                router.push('/dashboard');
+                router.refresh();
+            }, 1500);
         } catch (err) {
             setError(err.message || 'Registration failed. Please try again.');
-        } finally {
             setLoading(false);
         }
     };
@@ -200,6 +203,19 @@ export default function SignupPage() {
                 </div>
             </div>
 
+            {/* Success Toast Notification */}
+            {toastMessage && (
+                <div className="fixed top-6 right-6 z-50 flex items-center gap-3 bg-emerald-950 text-emerald-100 border border-emerald-500/30 px-5 py-3.5 rounded-2xl shadow-2xl animate-in slide-in-from-top-5 duration-300">
+                    <div className="p-1 bg-emerald-500/20 text-emerald-400 rounded-full">
+                        <Sparkles className="w-5 h-5 animate-pulse" />
+                    </div>
+                    <div>
+                        <p className="text-sm font-bold text-white">{toastMessage}</p>
+                        <p className="text-xs text-emerald-300/80">Welcome to Synth Media Agency</p>
+                    </div>
+                </div>
+            )}
+
             {/* Policy Agreement Modal */}
             {showPolicyModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
@@ -214,21 +230,8 @@ export default function SignupPage() {
                             </div>
                         </div>
 
-                        <div className="text-sm text-gray-600 space-y-3 bg-gray-50 p-4 rounded-xl border border-gray-100">
-                            <p>
-                                Before creating your account, please read and agree to the terms, conditions, and policies governing the use of Synth Media Agency services.
-                            </p>
-                            <p>
-                                You can review our full policy document at any time here:{' '}
-                                <a
-                                    href="https://synthmediaagency.vercel.app/policies.html"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-purple-600 font-semibold underline hover:text-purple-700"
-                                >
-                                    https://synthmediaagency.vercel.app/policies.html
-                                </a>
-                            </p>
+                        <div className="text-sm text-gray-600 bg-gray-50 p-4 rounded-xl border border-gray-100/80 leading-relaxed">
+                            Before creating your account, please read and agree to the terms, conditions, and policies governing the use of Synth Media Agency services.
                         </div>
 
                         <label className="flex items-start gap-3 cursor-pointer pt-1">
@@ -236,15 +239,15 @@ export default function SignupPage() {
                                 type="checkbox"
                                 checked={policyAgreed}
                                 onChange={(e) => setPolicyAgreed(e.target.checked)}
-                                className="mt-1 w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+                                className="mt-0.5 w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500 transition-colors"
                             />
-                            <span className="text-xs text-gray-700 font-medium leading-tight">
+                            <span className="text-xs text-gray-700 font-medium leading-normal">
                                 I have read, understood, and agree to abide by the{' '}
                                 <a
                                     href="https://synthmediaagency.vercel.app/policies.html"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-purple-600 underline"
+                                    className="text-purple-600 font-bold underline hover:text-purple-700 transition-colors"
                                 >
                                     Synth Media Agency Policies
                                 </a>.

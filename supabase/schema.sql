@@ -284,21 +284,21 @@ VALUES
 INSERT INTO public.packages (service_id, name, description, price, currency, features, revisions, delivery_days, paystack_link)
 VALUES
   -- Graphic Design
-  ('11111111-1111-1111-1111-111111111111', 'BASIC Graphic Design', 'Single flyer design with fast delivery.', 10000, 'NGN', '["1 Flyer", "1 Design Concept", "1 Revision Iteration", "JPG/PNG Delivery"]'::jsonb, 1, 2, 'https://paystack.shop/pay/au2angjyre'),
-  ('11111111-1111-1111-1111-111111111111', 'STANDARD Graphic Design', 'Two flyer designs with PDF and priority delivery.', 20000, 'NGN', '["2 Flyers", "2 Design Concepts", "2 Revision Iterations", "JPG/PNG + PDF Formats", "Priority Delivery"]'::jsonb, 2, 2, 'https://paystack.shop/pay/g5tcfugcn3'),
-  ('11111111-1111-1111-1111-111111111111', 'PREMIUM Graphic Design', 'Four flyers with multiple concepts and social media optimization.', 35000, 'NGN', '["4 Flyers", "2 Design Concepts per flyer", "Up to 3 Revisions", "JPG/PNG + PDF Formats", "Social-Media Optimized Versions"]'::jsonb, 3, 3, 'https://paystack.shop/pay/szh231e95j'),
+  ('11111111-1111-1111-1111-111111111111', 'BASIC Graphic Design', 'Single flyer design with fast delivery.', 10000, 'NGN', '["1 Flyer", "1 Design Concept", "1 Revision Iteration", "JPG/PNG Delivery"]'::jsonb, 1, 2, 'https://paystack.shop/pay/hxcdkm3k3f'),
+  ('11111111-1111-1111-1111-111111111111', 'STANDARD Graphic Design', 'Two flyer designs with PDF and priority delivery.', 20000, 'NGN', '["2 Flyers", "2 Design Concepts", "2 Revision Iterations", "JPG/PNG + PDF Formats", "Priority Delivery"]'::jsonb, 2, 2, 'https://paystack.shop/pay/ukgtb2ggb4'),
+  ('11111111-1111-1111-1111-111111111111', 'PREMIUM Graphic Design', 'Four flyers with multiple concepts and social media optimization.', 35000, 'NGN', '["4 Flyers", "2 Design Concepts per flyer", "Up to 3 Revisions", "JPG/PNG + PDF Formats", "Social-Media Optimized Versions"]'::jsonb, 3, 3, 'https://paystack.shop/pay/muk7p5hwcz'),
 
   -- Social Media Content
-  ('22222222-2222-2222-2222-222222222222', 'STARTER Monthly Content', '8 custom graphics, captions and basic planning.', 30000, 'NGN', '["8 Custom Graphics", "4 Engaging Captions", "Basic Content Planning"]'::jsonb, 2, 30, 'https://paystack.shop/pay/1pfypkmakp'),
-  ('22222222-2222-2222-2222-222222222222', 'GROWTH Monthly Content', '12 graphics, 4 short video reels, captions & calendar.', 60000, 'NGN', '["12 Custom Graphics", "4 Short Videos / Reels", "Professional Captions", "Strategic Content Calendar"]'::jsonb, 3, 30, 'https://paystack.shop/pay/u2p-6h00ht'),
-  ('22222222-2222-2222-2222-222222222222', 'PRO Monthly Content & Management', '20 graphics, 8 reels, full calendar & page management.', 100000, 'NGN', '["20 Custom Graphics", "8 Video Reels", "Professional Captions", "Content Calendar", "Full Page Management"]'::jsonb, 5, 30, 'https://paystack.shop/pay/retrttq0-4'),
+  ('22222222-2222-2222-2222-222222222222', 'STARTER Monthly Content', '8 custom graphics, captions and basic planning.', 30000, 'NGN', '["8 Custom Graphics", "4 Engaging Captions", "Basic Content Planning"]'::jsonb, 2, 30, 'https://paystack.shop/pay/v6duve8by1'),
+  ('22222222-2222-2222-2222-222222222222', 'GROWTH Monthly Content', '12 graphics, 4 short video reels, captions & calendar.', 60000, 'NGN', '["12 Custom Graphics", "4 Short Videos / Reels", "Professional Captions", "Strategic Content Calendar"]'::jsonb, 3, 30, 'https://paystack.shop/pay/miad3ce-oh'),
+  ('22222222-2222-2222-2222-222222222222', 'PRO Monthly Content & Management', '20 graphics, 8 reels, full calendar & page management.', 100000, 'NGN', '["20 Custom Graphics", "8 Video Reels", "Professional Captions", "Content Calendar", "Full Page Management"]'::jsonb, 5, 30, 'https://paystack.shop/pay/6g5-wi7ma4'),
 
   -- Brand Identity
-  ('33333333-3333-3333-3333-333333333333', 'Branding Starter', 'Essential brand logo and stationery pack.', 60000, 'NGN', '["Primary Logo Design", "Business Card Design", "Corporate Letterhead", "Social Media Profile Image", "2 Revision Iterations"]'::jsonb, 2, 5, 'https://paystack.shop/pay/ry6afkacpn'),
-  ('33333333-3333-3333-3333-333333333333', 'COMPLETE BRAND Package', 'Full identity system, guidelines, typography & social templates.', 120000, 'NGN', '["Primary & Secondary Logo", "Brand Colour Palette", "Typography System", "Business Card & Letterhead", "Social Media Templates", "Brand Guidelines Manual"]'::jsonb, 4, 10, 'https://paystack.shop/pay/wi9lyt0aeb'),
+  ('33333333-3333-3333-3333-333333333333', 'Branding Starter', 'Essential brand logo and stationery pack.', 60000, 'NGN', '["Primary Logo Design", "Business Card Design", "Corporate Letterhead", "Social Media Profile Image", "2 Revision Iterations"]'::jsonb, 2, 5, 'https://paystack.shop/pay/rv51xg03gf'),
+  ('33333333-3333-3333-3333-333333333333', 'COMPLETE BRAND Package', 'Full identity system, guidelines, typography & social templates.', 120000, 'NGN', '["Primary & Secondary Logo", "Brand Colour Palette", "Typography System", "Business Card & Letterhead", "Social Media Templates", "Brand Guidelines Manual"]'::jsonb, 4, 10, 'https://paystack.shop/pay/0ew0w2zzsc'),
 
   -- Video Content Alone
-  ('44444444-4444-4444-4444-444444444444', 'Single Video Content', 'Standalone short video or promotional reel creation.', 15000, 'NGN', '["1 Promotional Video / Reel", "High Definition Export", "Motion Graphics & Captions"]'::jsonb, 2, 3, 'https://paystack.shop/pay/ba1cdf7e8o');
+  ('44444444-4444-4444-4444-444444444444', 'Single Video Content', 'Standalone short video or promotional reel creation.', 15000, 'NGN', '["1 Promotional Video / Reel", "High Definition Export", "Motion Graphics & Captions"]'::jsonb, 2, 3, 'https://paystack.shop/pay/yz0vhd0gy6');
 
 -- ============================================================
 -- SET ADMIN USER ROLE

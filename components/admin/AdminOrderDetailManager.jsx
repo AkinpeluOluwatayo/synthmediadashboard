@@ -58,17 +58,33 @@ export default function AdminOrderDetailManager({ order, customer, service, pkg,
 
         setLoading(true);
         try {
+            // Detect storage provider from URL
+            const isGoogleDrive = deliverableUrl.includes('drive.google.com') || deliverableUrl.includes('docs.google.com');
+            const storageProvider = isGoogleDrive ? 'google_drive' : 'supabase';
+
             const { error: delivError } = await supabase
                 .from('deliverables')
                 .insert({
                     order_id: order.id,
                     file_name: deliverableName,
                     file_url: deliverableUrl,
-                    storage_provider: 'supabase',
+                    storage_provider: storageProvider,
                     released: true,
                 });
 
             if (delivError) throw delivError;
+
+            // Auto-update order status to COMPLETED
+            const { error: statusError } = await supabase
+                .from('orders')
+                .update({
+                    status: 'COMPLETED',
+                    updated_at: new Date().toISOString(),
+                })
+                .eq('id', order.id);
+
+            if (statusError) console.error('Status auto-update warning:', statusError);
+            setStatus('COMPLETED');
 
             // Trigger Email Notification to Client
             fetch('/api/notifications/delivery', {
@@ -87,7 +103,7 @@ export default function AdminOrderDetailManager({ order, customer, service, pkg,
 
             setDeliverableName('');
             setDeliverableUrl('');
-            setMessage('Project deliverable attached & email delivery notification dispatched.');
+            setMessage('✅ Project marked as COMPLETED, deliverable attached & email notification sent to client.');
             router.refresh();
         } catch (err) {
             setError(err.message || 'Failed to attach deliverable.');

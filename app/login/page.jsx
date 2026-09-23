@@ -17,6 +17,8 @@ export default function LoginPage() {
     const router = useRouter();
     const supabase = createClient();
 
+    const [toastMessage, setToastMessage] = useState('');
+
     const handleLogin = async (e) => {
         e.preventDefault();
         setError('');
@@ -37,15 +39,15 @@ export default function LoginPage() {
                 .eq('id', data.user.id)
                 .single();
 
-            if (profile && profile.role === 'admin') {
-                router.push('/admin');
-            } else {
-                router.push('/dashboard');
-            }
-            router.refresh();
+            const targetPath = profile && profile.role === 'admin' ? '/admin' : '/dashboard';
+            setToastMessage('Signed in successfully! Redirecting...');
+
+            setTimeout(() => {
+                router.push(targetPath);
+                router.refresh();
+            }, 1200);
         } catch (err) {
             setError(err.message || 'Invalid email or password. Please try again.');
-        } finally {
             setLoading(false);
         }
     };
@@ -136,6 +138,18 @@ export default function LoginPage() {
                     </p>
                 </div>
             </div>
+            {/* Success Toast Notification */}
+            {toastMessage && (
+                <div className="fixed top-6 right-6 z-50 flex items-center gap-3 bg-emerald-950 text-emerald-100 border border-emerald-500/30 px-5 py-3.5 rounded-2xl shadow-2xl animate-in slide-in-from-top-5 duration-300">
+                    <div className="p-1 bg-emerald-500/20 text-emerald-400 rounded-full">
+                        <Sparkles className="w-5 h-5 animate-pulse" />
+                    </div>
+                    <div>
+                        <p className="text-sm font-bold text-white">{toastMessage}</p>
+                        <p className="text-xs text-emerald-300/80">Welcome back to Synth Media Agency</p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
