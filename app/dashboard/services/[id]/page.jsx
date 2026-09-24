@@ -32,7 +32,8 @@ export default async function ServiceDetailPage({ params }) {
     }
 
     const isCustomConsultation = service.custom_consultation || service.packages?.length === 0;
-    const whatsappUrl = `https://wa.me/2348000000000?text=${encodeURIComponent(
+    const whatsappPhone = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '2348100000000';
+    const whatsappUrl = `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(
         `Hello Synth Media Agency! I am interested in inquiring about your "${service.name}" service for my organization.`
     )}`;
 
