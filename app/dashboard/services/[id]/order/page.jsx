@@ -16,10 +16,12 @@ export default async function OrderCreationPageWrapper({ params, searchParams })
         .eq('id', user?.id || '')
         .single();
 
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+
     const { data: service } = await supabase
         .from('services')
         .select('*, packages(*)')
-        .eq('id', id)
+        .or(isUuid ? `id.eq.${id},slug.eq.${id}` : `slug.eq.${id}`)
         .single();
 
     if (!service) {

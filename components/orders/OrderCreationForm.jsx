@@ -118,7 +118,7 @@ export default function OrderCreationPage({ service, selectedPackage, profile })
         <DashboardLayout userProfile={profile}>
             <div className="max-w-4xl mx-auto space-y-8">
                 <div>
-                    <Link href={`/dashboard/services/${service.id}`} className="inline-flex items-center text-xs font-semibold text-purple-600 hover:text-purple-700 mb-4">
+                    <Link href={`/dashboard/services/${service.slug || service.id}`} className="inline-flex items-center text-xs font-semibold text-purple-600 hover:text-purple-700 mb-4">
                         <ArrowLeft className="w-4 h-4 mr-1" /> Back to Packages
                     </Link>
                     <h1 className="text-2xl font-black text-gray-900 tracking-tight">Submit Project Requirements</h1>

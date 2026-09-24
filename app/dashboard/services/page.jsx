@@ -95,7 +95,7 @@ export default async function ServicesMarketplacePage() {
                                                         {minPrice !== null ? formatCurrency(minPrice) : 'Contact Us'}
                                                     </span>
                                                 </div>
-                                                <Link href={`/dashboard/services/${service.id}`}>
+                                                <Link href={`/dashboard/services/${service.slug || service.id}`}>
                                                     <button className="px-3.5 py-2 bg-synth-gradient text-white text-xs font-bold rounded-lg shadow-sm hover:opacity-95 flex items-center gap-1.5">
                                                         View Packages <ArrowRight className="w-3.5 h-3.5" />
                                                     </button>

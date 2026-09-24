@@ -19,10 +19,12 @@ export default async function ServiceDetailPage({ params }) {
         .eq('id', user?.id || '')
         .single();
 
+    const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+
     const { data: service } = await supabase
         .from('services')
         .select('*, packages(*)')
-        .eq('id', id)
+        .or(isUuid ? `id.eq.${id},slug.eq.${id}` : `slug.eq.${id}`)
         .single();
 
     if (!service) {
@@ -124,7 +126,7 @@ export default async function ServiceDetailPage({ params }) {
                                         </div>
 
                                         <div className="pt-4 border-t border-gray-100">
-                                            <Link href={`/dashboard/services/${service.id}/order?packageId=${pkg.id}`}>
+                                            <Link href={`/dashboard/services/${service.slug || service.id}/order?packageId=${pkg.id}`}>
                                                 <button className="w-full py-3 bg-synth-gradient text-white text-xs font-extrabold rounded-xl shadow-md hover:opacity-95 flex items-center justify-center gap-2">
                                                     Select {pkg.name} <ArrowRight className="w-4 h-4" />
                                                 </button>
