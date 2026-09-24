@@ -270,10 +270,10 @@ DELETE FROM public.services;
 
 INSERT INTO public.services (id, name, slug, category, description, image_url, active, custom_consultation)
 VALUES 
-  ('11111111-1111-1111-1111-111111111111', 'Graphic Design', 'graphic-design', 'CREATIVE', 'High-impact creative graphic design tailored for brands, campaigns, and events.', 'https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&q=80&w=600', true, false),
-  ('22222222-2222-2222-2222-222222222222', 'Social Media Content', 'social-media-content', 'DIGITAL GROWTH', 'Comprehensive monthly social media graphics, video reels, captions, and management.', 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&q=80&w=600', true, false),
-  ('33333333-3333-3333-3333-333333333333', 'Brand Identity', 'brand-identity', 'CREATIVE', 'Complete corporate brand identity systems, logos, palettes, and stationery assets.', 'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=600', true, false),
-  ('44444444-4444-4444-4444-444444444444', 'Video Content Creation', 'video-content-creation', 'CREATIVE', 'Standalone promotional video creation and short-form video production.', 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=600', true, false),
+  ('11111111-1111-1111-1111-111111111111', 'Graphic Design', 'graphic-design', 'CREATIVE', 'High-impact creative graphic design tailored for brands, campaigns, and events.', '/images/services/graphic-design.png', true, false),
+  ('22222222-2222-2222-2222-222222222222', 'Social Media Content', 'social-media-content', 'DIGITAL GROWTH', 'Comprehensive monthly social media graphics, video reels, captions, and management.', '/images/services/social-media-content.png', true, false),
+  ('33333333-3333-3333-3333-333333333333', 'Brand Identity', 'brand-identity', 'CREATIVE', 'Complete corporate brand identity systems, logos, palettes, and stationery assets.', '/images/services/brand-identity.png', true, false),
+  ('44444444-4444-4444-4444-444444444444', 'Video Content Creation', 'video-content-creation', 'CREATIVE', 'Standalone promotional video creation and short-form video production.', '/images/services/video-content-creation.png', true, false),
   ('55555555-5555-5555-5555-555555555555', 'Tech Support & Managed Infrastructure', 'tech-support-service', 'TECHNOLOGY', 'Custom technical infrastructure support, system monitoring, cloud setup & web maintenance.', 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=600', true, true),
   ('66666666-6666-6666-6666-666666666666', 'Full Enterprise Agency Partnership', 'enterprise-partnership', 'DIGITAL GROWTH', 'Dedicated multi-channel retainer team for full-scale growth, technology, and branding.', 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=600', true, true);
 

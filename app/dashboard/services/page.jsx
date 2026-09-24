@@ -65,13 +65,21 @@ export default async function ServicesMarketplacePage() {
                                         ? Math.min(...service.packages.map(p => Number(p.price)))
                                         : null;
 
+                                    const localImages = {
+                                        'graphic-design': '/images/services/graphic-design.png',
+                                        'social-media-content': '/images/services/social-media-content.png',
+                                        'brand-identity': '/images/services/brand-identity.png',
+                                        'video-content-creation': '/images/services/video-content-creation.png',
+                                    };
+                                    const displayImage = localImages[service.slug] || service.image_url;
+
                                     return (
                                         <Card key={service.id} className="flex flex-col justify-between hover:shadow-md border-gray-200 transition-all">
                                             <div className="space-y-4">
-                                                {service.image_url && (
+                                                {displayImage && (
                                                     <div className="h-40 w-full rounded-lg overflow-hidden bg-gray-100 relative">
                                                         <img
-                                                            src={service.image_url}
+                                                            src={displayImage}
                                                             alt={service.name}
                                                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                                                         />
