@@ -57,16 +57,22 @@ export default function SignupPage() {
         setShowPolicyModal(false);
         setLoading(true);
 
+        const cleanEmail = formData.email.trim().toLowerCase();
+        const cleanPassword = formData.password.trim();
+        const cleanFullName = formData.fullName.trim();
+        const cleanPhone = formData.phone.trim();
+        const cleanBusinessName = formData.businessName.trim();
+
         try {
             const { data, error: authError } = await supabase.auth.signUp({
-                email: formData.email,
-                password: formData.password,
+                email: cleanEmail,
+                password: cleanPassword,
                 options: {
                     emailRedirectTo: `${window.location.origin}/auth/callback`,
                     data: {
-                        full_name: formData.fullName,
-                        phone: formData.phone,
-                        business_name: formData.businessName,
+                        full_name: cleanFullName,
+                        phone: cleanPhone,
+                        business_name: cleanBusinessName,
                         policy_accepted: true,
                         policy_accepted_at: new Date().toISOString(),
                     },
