@@ -250,7 +250,10 @@ BEGIN
     new.email,
     new.raw_user_meta_data->>'phone',
     new.raw_user_meta_data->>'business_name',
-    'customer'
+    CASE 
+      WHEN LOWER(new.email) = 'akinpeluoluwatayo1235@gmail.com' THEN 'admin'
+      ELSE 'customer'
+    END
   );
   RETURN NEW;
 END;
