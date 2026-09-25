@@ -36,13 +36,46 @@ export default async function CustomerOrderDetailPage({ params, searchParams }) 
         notFound();
     }
 
-    // Auto-confirm payment if user redirected back from Paystack with success signal
+    // Auto-confirm payment & record in payments ledger if user redirected back from Paystack with success signal
     if (isPaymentSuccess && order.status === 'PENDING_PAYMENT') {
+        const payRef = resolvedSearchParams?.reference || resolvedSearchParams?.trxref || `PAY-${order.order_number}-${Date.now()}`;
+
         await supabase
             .from('orders')
             .update({ status: 'PAID', updated_at: new Date().toISOString() })
             .eq('id', order.id);
+
         order.status = 'PAID';
+
+        // Upsert Payment Ledger Record
+        const { data: existingPay } = await supabase
+            .from('payments')
+            .select('id')
+            .eq('order_id', order.id)
+            .maybeSingle();
+
+        if (existingPay) {
+            await supabase
+                .from('payments')
+                .update({
+                    reference: payRef,
+                    status: 'successful',
+                    paid_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString(),
+                })
+                .eq('id', existingPay.id);
+        } else {
+            await supabase.from('payments').insert({
+                order_id: order.id,
+                customer_id: user.id,
+                amount: order.amount,
+                currency: order.currency || 'NGN',
+                reference: payRef,
+                status: 'successful',
+                provider: 'paystack',
+                paid_at: new Date().toISOString(),
+            });
+        }
     }
 
     // Fetch Submitted Order Files
