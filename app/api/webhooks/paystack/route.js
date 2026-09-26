@@ -80,44 +80,47 @@ export async function POST(request) {
                 }
             }
 
+            // Process payment update in parallel/async to guarantee <5s response to Paystack
             if (targetOrder) {
-                // 1. Update Order status to PAID
-                await supabase
+                const updateOrderPromise = supabase
                     .from('orders')
                     .update({ status: 'PAID', updated_at: new Date().toISOString() })
                     .eq('id', targetOrder.id);
 
-                // 2. Upsert Payment Ledger Record
-                const { data: existingPay } = await supabase
-                    .from('payments')
-                    .select('id')
-                    .eq('order_id', targetOrder.id)
-                    .maybeSingle();
-
-                if (existingPay) {
-                    await supabase
+                const updatePaymentPromise = (async () => {
+                    const { data: existingPay } = await supabase
                         .from('payments')
-                        .update({
-                            reference: reference,
+                        .select('id')
+                        .eq('order_id', targetOrder.id)
+                        .maybeSingle();
+
+                    if (existingPay) {
+                        return supabase
+                            .from('payments')
+                            .update({
+                                reference: reference,
+                                amount: amountPaid || targetOrder.amount,
+                                status: 'successful',
+                                provider: 'paystack',
+                                paid_at: new Date().toISOString(),
+                                updated_at: new Date().toISOString(),
+                            })
+                            .eq('id', existingPay.id);
+                    } else {
+                        return supabase.from('payments').insert({
+                            order_id: targetOrder.id,
+                            customer_id: targetOrder.customer_id,
                             amount: amountPaid || targetOrder.amount,
+                            currency: targetOrder.currency || 'NGN',
+                            reference: reference,
                             status: 'successful',
                             provider: 'paystack',
                             paid_at: new Date().toISOString(),
-                            updated_at: new Date().toISOString(),
-                        })
-                        .eq('id', existingPay.id);
-                } else {
-                    await supabase.from('payments').insert({
-                        order_id: targetOrder.id,
-                        customer_id: targetOrder.customer_id,
-                        amount: amountPaid || targetOrder.amount,
-                        currency: targetOrder.currency || 'NGN',
-                        reference: reference,
-                        status: 'successful',
-                        provider: 'paystack',
-                        paid_at: new Date().toISOString(),
-                    });
-                }
+                        });
+                    }
+                })();
+
+                await Promise.all([updateOrderPromise, updatePaymentPromise]);
             }
         }
 
