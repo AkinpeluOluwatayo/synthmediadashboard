@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import AdminOrderDetailManager from '@/components/admin/AdminOrderDetailManager';
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminOrderDetailPageWrapper({ params }) {
     const { id } = await params;
     const supabase = await createClient();

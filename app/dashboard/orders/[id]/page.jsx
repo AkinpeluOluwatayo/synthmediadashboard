@@ -10,6 +10,8 @@ import { OrderFeedbackForm } from '@/components/orders/OrderFeedbackForm';
 import { formatCurrency, formatDate } from '@/lib/utils';
 import { ArrowLeft, FileText, Download, Clock, CreditCard, Sparkles, FolderCheck } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export default async function CustomerOrderDetailPage({ params, searchParams }) {
     const { id } = await params;
     const resolvedSearchParams = await searchParams;

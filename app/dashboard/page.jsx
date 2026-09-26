@@ -15,6 +15,8 @@ import {
     FolderOpen
 } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export default async function CustomerDashboardPage() {
     const supabase = await createClient();
 

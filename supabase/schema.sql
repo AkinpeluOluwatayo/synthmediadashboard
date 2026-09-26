@@ -225,6 +225,44 @@ DO $$ BEGIN
   CREATE POLICY "Admins full access deliverables" ON public.deliverables FOR ALL USING (public.is_admin());
 EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
+-- ============================================================
+-- STORAGE BUCKETS ROW-LEVEL SECURITY (RLS) POLICIES
+-- ============================================================
+
+INSERT INTO storage.buckets (id, name, public) 
+VALUES ('order_files', 'order_files', false), ('deliverables', 'deliverables', false)
+ON CONFLICT (id) DO UPDATE SET public = false;
+
+-- 1. Order Files Storage Policies
+DO $$ BEGIN
+  CREATE POLICY "Customers view own order storage files" ON storage.objects FOR SELECT USING (
+    bucket_id = 'order_files' AND (
+      (auth.uid())::text = (storage.foldername(name))[1] OR public.is_admin()
+    )
+  );
+EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+
+DO $$ BEGIN
+  CREATE POLICY "Customers upload own order storage files" ON storage.objects FOR INSERT WITH CHECK (
+    bucket_id = 'order_files' AND (auth.uid())::text = (storage.foldername(name))[1]
+  );
+EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+
+-- 2. Deliverables Storage Policies
+DO $$ BEGIN
+  CREATE POLICY "Customers view released deliverables storage" ON storage.objects FOR SELECT USING (
+    bucket_id = 'deliverables' AND (
+      (auth.uid())::text = (storage.foldername(name))[1] OR public.is_admin()
+    )
+  );
+EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+
+DO $$ BEGIN
+  CREATE POLICY "Admins manage deliverables storage" ON storage.objects FOR ALL USING (
+    bucket_id = 'deliverables' AND public.is_admin()
+  );
+EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+
 ALTER TABLE public.order_feedback ENABLE ROW LEVEL SECURITY;
 
 DO $$ BEGIN
